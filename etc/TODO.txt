@@ -1,0 +1,4 @@
+- preallocate memory in bmerge to avoid overhead
+- implement test.c and test.h
+- add test files
+- add documantation

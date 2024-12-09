@@ -1,0 +1,28 @@
+# Compiled binary files
+*.o
+*.out
+*.exe
+
+# Build directories
+build/
+bin/
+
+# MPI log/output files
+output/
+*.log
+
+# Editor/IDE specific files
+*.vscode/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Backup and temporary files
+*~
+*.old
+
+# Core dumps
+core
