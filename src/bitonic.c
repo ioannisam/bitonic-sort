@@ -1,60 +1,67 @@
 #include "../include/bitonic.h"
+#include "../include/utility.h"
 
-#include <stdio.h>
+#include <mpi.h>
+#include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-void bmerge(int* arr, int low, int cnt, Order direction) {
+void exchange(int partner, Vector* local, Vector* buffer) {
+  if (buffer->size < local->size) {
+    fprintf(stderr, "Buffer size mismatch\n");
+    MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
+  }
+  MPI_Sendrecv(local->arr, local->size, MPI_INT, partner, 0,
+               buffer->arr, local->size, MPI_INT, partner, 0,
+               MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+}
 
-  if (cnt > 1) {
+void minmax(int rank, int stage, int distance, Vector* local, Vector* buffer) {
 
-    int k = cnt/2;
+  int mirror = 1 << stage;
+  int w = 2*mirror;
+  int pos = rank % w;
 
-    int* minb = (int*)malloc(k*sizeof(int));
-    int* maxb = (int*)malloc(k*sizeof(int));
+  int reflection = pos<mirror ? mirror-pos-1 : pos-mirror; 
 
-    for (int i=0; i<k; i++) {
-      int left  = arr[low+i];
-      int right = arr[low+i + k];
-      minb[i] = (left<right) ? left : right;
-      maxb[i] = (left>right) ? left : right;
-    }
-
-    // merge according to direction
-    if (direction == ASCENDING) {
-      for (int i=0; i<k; i++) {
-        arr[low+i] = minb[i];
-        arr[low+i + k] = maxb[i];
-      }
-    } else if (direction == DESCENDING){
-      for (int i=0; i<k; i++) {
-        arr[low+i] = maxb[i];
-        arr[low+i + k] = minb[i];
-      }
-    } else {
-      fprintf(stderr, "Direction Error\n");
-      free(minb);
-      free(maxb);
-      exit(EXIT_FAILURE);
-    }
-
-    free(minb);
-    free(maxb);
-
-    // merge the two halves
-    bmerge(arr, low  , k, direction);
-    bmerge(arr, low+k, k, direction);
+  if (reflection & (1 << (int)log2(distance))) {
+    // min
+  } else {
+    // max
   }
 }
 
-void bsort(int* arr, int low, int cnt, Order direction) {
-  if (cnt > 1) {
-    int k = cnt / 2;
+void elbowsort(int* local, int local_size, int ascending) {
+  // TODO: sort a bitonic sequence using starting from the "elbow" 
+}
 
-    // sort the two halves
-    bsort(arr, low  , k, ASCENDING);
-    bsort(arr, low+k, k, DESCENDING);
+void distributed_sort(Vector* local, int rank, int size) {
 
-    // merge the two halves
-    bmerge(arr, low, cnt, direction);
+  // number of processes
+  int const p = log2(size);
+
+  Vector* buffer = newVec(local->size);
+
+  // initial local sort
+  if (rank & 1) {
+    qsort(local->arr, local->size, sizeof(int), compare_descending);
+  } else { 
+    qsort(local->arr, local->size, sizeof(int), compare_ascending);
   }
+
+  for (int stage=1; stage<=p; stage++) {
+    for (int step=stage; step>=1; step--) {
+
+      int distance = 1 << (step-1);
+      int partner = rank ^ distance;
+      int direction = (rank & distance) == 0; // Ascending (0) or Descending (1)
+      printf("RANK %d: Stage %d, Distance %d. Partner: %d\n", rank, stage, distance, partner);
+
+      exchange(partner, local, buffer);
+      minmax(rank, stage, distance, local, buffer);
+    }
+    elbowsort(local->arr, local->size, (rank & (1 << (stage - 1))) == 0);
+  }
+
+  free(buffer);
 }

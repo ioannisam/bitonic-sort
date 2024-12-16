@@ -1,6 +1,7 @@
 # Compiler and flags
-CC = gcc
+CC = mpicc
 CFLAGS = -Wall -Wextra -O2 -Iinclude
+LDFLAGS = -lm
 
 # Directories
 SRC_DIR = src
@@ -13,14 +14,14 @@ SRCS = $(wildcard $(SRC_DIR)/*.c)
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 # Target executable
-TARGET = $(BIN_DIR)/program 
+TARGET = $(BIN_DIR)/distributed 
 
 # Default target
 all: $(TARGET)
 
 # Link the final executable
 $(TARGET): $(OBJS) | $(BIN_DIR)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Compile source files into object files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
@@ -38,9 +39,9 @@ $(BIN_DIR):
 clean:
 	rm -rf $(BUILD_DIR)/*.o $(TARGET)
 
-# Run the program with example arguments
+# Run the program with example arguments (4 processes 4 numbers each)
 run: $(TARGET)
-	./$(TARGET) 2 2
+	mpirun -np 4 ./$(TARGET) 2 2
 
 # Phony targets
 .PHONY: all clean run
