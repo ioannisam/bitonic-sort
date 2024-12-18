@@ -26,16 +26,8 @@ void checkArgs(int argc, char** argv, int* q, int* p, int rank, int size) {
   }
   
   if (rank == 0) {
-    printf("2^q=%d numbers per process, 2^p=%d processes.\n\n", 1<<*q, 1<<*p);
+    printf("\n2^q=%d numbers per process, 2^p=%d processes.\n\n", 1<<*q, 1<<*p);
   }
-}
-
-int compare_ascending(const void* a, const void* b) {
-  return (*(int*)a - *(int*)b);
-}
-
-int compare_descending(const void* a, const void* b) {
-  return (*(int*)b - *(int*)a);
 }
 
 Vector* newVec(int size) {
@@ -82,4 +74,12 @@ void randomVec(Vector* vec, int max) {
   for (int i=0; i<vec->size; i++) {
     vec->arr[i] = rand()%max;
   }
+}
+
+int compAsc(const void* a, const void* b) {
+  return (*(int*)a - *(int*)b);
+}
+
+int compDesc(const void* a, const void* b) {
+  return (*(int*)b - *(int*)a);
 }

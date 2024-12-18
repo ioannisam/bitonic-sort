@@ -1,5 +1,3 @@
-- implement min-max functionalities for minmax
 - implement "elbow" sort
-- verify MPI correctness
-- implement test.c and test.h, add test files
+- do the testing
 - add documantation (report/README and algorithm visualization)

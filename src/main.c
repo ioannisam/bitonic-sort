@@ -1,5 +1,6 @@
 #include "../include/bitonic.h"
 #include "../include/utility.h"
+#include "../include/test.h"
 
 #include <mpi.h>
 #include <stdio.h>
@@ -40,10 +41,10 @@ int main(int argc, char** argv) {
     sorted = newVec(N);
   }
   MPI_Gather(local->arr, local->size, MPI_INT, sorted ? sorted->arr : NULL, local->size, MPI_INT, 0, MPI_COMM_WORLD);
-  if (rank == 0) {
-    printVec(sorted, "Sorted data:\n");
-    delVec(sorted);
-  }
+
+  // wait until all ranks reach this point 
+  MPI_Barrier(MPI_COMM_WORLD);
+  results(sorted, rank, size);
 
   delVec(local);
   MPI_Finalize();

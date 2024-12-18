@@ -8,9 +8,7 @@ typedef enum {
   DESCENDING = 0
 } Order;
 
-void exchange(int partner, Vector* local, Vector* buffer);
-void minmax(int rank, int stage, int distance, Vector* local, Vector* buffer);
-void elbowsort(int* local, int local_size, int ascending);
+void exchange(int partner, Vector* local, Vector* remote);
 
 void distributed_sort(Vector* local_data, int rank, int size);
 

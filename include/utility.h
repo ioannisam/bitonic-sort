@@ -8,12 +8,12 @@ typedef struct {
 
 void checkArgs(int argc, char** argv, int* q, int* p, int rank, int size);
 
-int compare_ascending (const void* a, const void* b);
-int compare_descending(const void* a, const void* b);
-
 Vector* newVec(int size);
 void delVec(Vector* vec);
 void printVec(Vector* vec, char* message);
 void randomVec(Vector* vec, int max);
+
+int compAsc (const void* a, const void* b);
+int compDesc(const void* a, const void* b);
 
 #endif // UTILITY_H 
