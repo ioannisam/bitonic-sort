@@ -1,3 +1,2 @@
-- implement "elbow" sort
 - do the testing
 - add documantation (report/README and algorithm visualization)

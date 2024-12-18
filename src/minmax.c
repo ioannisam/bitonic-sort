@@ -27,7 +27,7 @@ void minmax(int rank, int stage, int distance, Vector* local, Vector* remote) {
   int w = 2*mirror;
   int pos = rank % w;
 
-  int reflection = pos<mirror ? mirror-pos-1 : pos-mirror; 
+  int reflection = pos<mirror ? mirror-pos - 1 : pos-mirror; 
 
   if (reflection & (1 << (int)log2(distance))) {
     min(local, remote);

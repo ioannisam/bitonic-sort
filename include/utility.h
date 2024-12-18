@@ -13,7 +13,7 @@ void delVec(Vector* vec);
 void printVec(Vector* vec, char* message);
 void randomVec(Vector* vec, int max);
 
-int compAsc (const void* a, const void* b);
-int compDesc(const void* a, const void* b);
+int compAscending (const void* a, const void* b);
+int compDescending(const void* a, const void* b);
 
 #endif // UTILITY_H 

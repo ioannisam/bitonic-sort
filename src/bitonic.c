@@ -6,7 +6,16 @@
 #include <stdlib.h>
 #include <math.h>
 #include <mpi.h>
-#include <stdio.h>
+// #include <stdio.h>
+
+void initialSort(Vector* local, int rank) {
+  
+  if (rank & 1) {
+    qsort(local->arr, local->size, sizeof(int), compDescending);
+  } else { 
+    qsort(local->arr, local->size, sizeof(int), compAscending);
+  }
+}
 
 void exchange(int partner, Vector* local, Vector* remote) {
 
@@ -21,13 +30,7 @@ void distributed_sort(Vector* local, int rank, int size) {
   int const p = log2(size);
   Vector* remote = newVec(local->size);
 
-  // initial local sort
-  if (rank & 1) {
-    qsort(local->arr, local->size, sizeof(int), compDesc);
-  } else { 
-    qsort(local->arr, local->size, sizeof(int), compAsc);
-  }
-
+  initialSort(local, rank); 
   for (int stage=1; stage<=p; stage++) {
     
     for (int step=stage; step>=1; step--) {
@@ -42,7 +45,8 @@ void distributed_sort(Vector* local, int rank, int size) {
     
     // Ascending (0) or Descending (1)
     int direction = (rank & (1 << stage)) == 0;     
-    elbowsort(local, direction);
+    elbowmerge(local, direction);
   }
+
   delVec(remote);
 }

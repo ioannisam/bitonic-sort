@@ -76,10 +76,10 @@ void randomVec(Vector* vec, int max) {
   }
 }
 
-int compAsc(const void* a, const void* b) {
+int compAscending(const void* a, const void* b) {
   return (*(int*)a - *(int*)b);
 }
 
-int compDesc(const void* a, const void* b) {
+int compDescending(const void* a, const void* b) {
   return (*(int*)b - *(int*)a);
 }

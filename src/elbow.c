@@ -2,73 +2,107 @@
 #include "../include/utility.h"
 
 #include "stdlib.h"
+#include "string.h"
 
-void merge(int* local, int left, int mid, int right, int ascending) {
+Extremum elbow(Vector* local) {
 
-  int size = right - left + 1;
-  int temp[size];
-  int i = left, j = mid + 1, k = 0;
+  Extremum point;
+  point.index = -1;
+  point.polarity = 0;
 
-  // Merge the two parts in sorted order
-  while (i <= mid && j <= right) {
-    if ((ascending && local[i] <= local[j]) || (!ascending && local[i] >= local[j])) {
-      temp[k++] = local[i++];
-    } else {
-      temp[k++] = local[j++];
+  int  n   = local->size;
+  int* arr = local->arr;
+
+  for (int i=0; i<n; i++) {
+    int prev = arr[(i-1 + n) % n];
+    int curr = arr[i];
+    int next = arr[(i+1) % n];
+
+    if (curr>prev && curr>next) {
+      point.index = i;
+      point.polarity = 1;
+      return point; // elbow
+    }
+
+    if (curr<prev && curr<next) {
+      point.index = i;
+      point.polarity = -1;
+      return point; // pit
     }
   }
 
-  // Copy the remaining elements
-  while (i <= mid) temp[k++] = local[i++];
-  while (j <= right) temp[k++] = local[j++];
-
-  // Copy the merged array back to the original array
-  for (i=left; i<=right; i++) {
-    local[i] = temp[i-left];
-  }
+  // invalid bitonic sequences
+  return point;
 }
 
-void mergeSort(int* local, int left, int right, int ascending) {
-  if (left < right) {
-    int mid = left + (right-left)/2;
+void elbowmerge(Vector* local, int direction) {
 
-    mergeSort(local, left, mid, ascending);
-    mergeSort(local, mid+1, right, ascending);
-    merge(local, left, mid, right, ascending);
+  Extremum point = elbow(local);
+  if (point.index == -1 || point.polarity == 0) {
+    return; // invalid sequence
   }
-}
 
-int findElbow(Vector* local) {
+  int  n   = local->size;
+  int* tmp = malloc(sizeof(int)*n);
 
-  for (int i=1; i<local->size; i++) {
-    if (local->arr[i] < local->arr[i-1]) {
-      return i-1;  // elbow is where the transition occurs
+  // adjacent indices to the extremum (elbow or pit)
+  int left  = (point.index-1 + n) % n;
+  int right = (point.index+1) % n;
+
+  // pit (minimum), ascending order
+  if (point.polarity == -1) {  
+
+    // add the extremum (minimum) first
+    int i = 0;
+    tmp[i++] = local->arr[point.index];  
+
+    // fill the array in ascending order
+    while (i < n) {
+      if (local->arr[left] < local->arr[right]) {
+        tmp[i++] = local->arr[left];
+        left = (left-1 + n) % n;  // move left index circularly
+      } else {
+        tmp[i++] = local->arr[right];
+        right = (right + 1) % n;  // move right index circularly
+      }
+    }
+  // elbow (maximum), descending order
+  } else if (point.polarity == 1) {  
+
+    // Add the extremum (maximum) first
+    int i = n-1;
+    tmp[i--] = local->arr[point.index];  
+
+    // fill the array in descending order
+    while (i >= 0) {
+      if (local->arr[left] > local->arr[right]) {
+        tmp[i--] = local->arr[left];
+        left = (left-1 + n) % n;  // move left index circularly
+      } else {
+        tmp[i--] = local->arr[right];
+        right = (right+1) % n;  // move right index circularly
+      }
     }
   }
 
-  return -1;  // no elbow found, sequence already sorted
-}
-
-void elbowsort(Vector* local, int direction){
-  
-  if(direction){
-    qsort(local->arr, local->size, sizeof(int), compAsc);
+  if (direction == 1) {
+    // Ascending Order: normal copy
+    memcpy(local->arr, tmp, sizeof(int)*n);
   } else {
-    qsort(local->arr, local->size, sizeof(int), compDesc);
+    // Descending Order: reverse copy
+    for (int j=0; j<n; j++) {
+      local->arr[j] = tmp[n-1 - j];
+    }
   }
+
+  free(tmp);
 }
 
-// void elbowsort(Vector* local, int ascending) {
-
-//   int elbow = findElbow(local);
-//   if (elbow == -1) {
-//     return;
+// void elbowsort(Vector* local, int direction) {
+//   
+//   if(direction){
+//     qsort(local->arr, local->size, sizeof(int), compAsc);
+//   } else {
+//     qsort(local->arr, local->size, sizeof(int), compDesc);
 //   }
-
-//   // sort first part before the elbow
-//   mergeSort(local->arr, 0, elbow, ascending);
-//   // sort second part after the elbow
-//   mergeSort(local->arr, elbow + 1, local->size - 1, ascending);
-//   // merge both sorted parts together 
-//   merge(local->arr, 0, elbow, local->size - 1, ascending);
 // }
