@@ -31,17 +31,23 @@ Extremum elbow(Vector* local) {
     }
   }
 
-  // invalid bitonic sequences
+  // invalid bitonic sequences (corner cases)
+  int max = 0;
+  for (int i=1; i<n; i++) {
+    if (arr[i] > arr[max]) {
+      max = i;
+    }
+  }
+  // return max as elbow
+  point.index = max;
+  point.polarity = 1;
+
   return point;
 }
 
 void elbowmerge(Vector* local, int direction) {
 
   Extremum point = elbow(local);
-  if (point.index == -1 || point.polarity == 0) {
-    return; // invalid sequence
-  }
-
   int  n   = local->size;
   int* tmp = malloc(sizeof(int)*n);
 
@@ -97,12 +103,3 @@ void elbowmerge(Vector* local, int direction) {
 
   free(tmp);
 }
-
-// void elbowsort(Vector* local, int direction) {
-//   
-//   if(direction){
-//     qsort(local->arr, local->size, sizeof(int), compAsc);
-//   } else {
-//     qsort(local->arr, local->size, sizeof(int), compDesc);
-//   }
-// }

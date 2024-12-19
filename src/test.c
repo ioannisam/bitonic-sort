@@ -29,9 +29,9 @@ int sortCheck(Vector* vec) {
 void results(Vector* sorted, int rank, int size) {
 
   if (rank == 0) {
-    printVec(sorted, "Sorted data:\n");
+    // printVec(sorted, "Sorted data:\n");
     isSorted(sorted, size) ? printf("Partial Check: Array is Sorted :)\n") : printf("Partial Check: Array is NOT Sorted :(\n");
-    sortCheck(sorted)      ? printf("Full Check: Array is Sorted :)\n")    : printf("Full Check: Array is NOT Sorted :(\n");
+    sortCheck(sorted)      ? printf("Full Check:    Array is Sorted :)\n") : printf("Full Check:    Array is NOT Sorted :(\n");
     delVec(sorted);
   }
 }

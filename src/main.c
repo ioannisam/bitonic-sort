@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
   Vector* local = newVec(1<<q);
   if (rank == 0) {
     Vector* data = newVec(N);
-    randomVec(data, 100);
-    printVec(data, "Unsorted data:\n");
+    randomVec(data, 1000);
+    // printVec(data, "Unsorted data:\n");
 
     // rank 0 scatters data across all ranks
     MPI_Scatter(data->arr, local->size, MPI_INT, local->arr, local->size, MPI_INT, 0, MPI_COMM_WORLD);
@@ -34,6 +34,7 @@ int main(int argc, char** argv) {
   }
 
   distributed_sort(local, rank, size);
+  MPI_Barrier(MPI_COMM_WORLD);
 
   // gather sorted data at root
   Vector* sorted = NULL;
@@ -42,7 +43,7 @@ int main(int argc, char** argv) {
   }
   MPI_Gather(local->arr, local->size, MPI_INT, sorted ? sorted->arr : NULL, local->size, MPI_INT, 0, MPI_COMM_WORLD);
 
-  // wait until all ranks reach this point 
+  // wait until all ranks reach this point
   MPI_Barrier(MPI_COMM_WORLD);
   results(sorted, rank, size);
 

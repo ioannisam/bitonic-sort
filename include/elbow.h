@@ -10,6 +10,5 @@ typedef struct  {
 
 Extremum  elbow(Vector* local);
 void elbowmerge(Vector* local, int direction);
-// void  elbowsort(Vector* local, int direction);
 
 #endif // ELBOW_H
