@@ -26,3 +26,6 @@ output/
 
 # Core dumps
 core
+
+# Redundant documents
+docs/assignment.md
