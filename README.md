@@ -38,7 +38,7 @@ To run the executable you can either run the command `make run`, which executes 
 ```bash
 mpirun -np {np} ./bin/distributed {q} {p}
 ```
-Where **np** is the number of processes, **2<sup>q</sup>** is the number of random integers per process and **2<sup>p</sup>** is also the number of processes.
+Where **np** is the number of processes (np = 2<sup>p</sup>), **2<sup>q</sup>** is the number of random integers per process and **2<sup>p</sup>** is also the number of processes.
 
 For example, in order to run **4 processes** with **4 integers** per process you need to run:
 

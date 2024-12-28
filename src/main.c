@@ -33,7 +33,9 @@ int main(int argc, char** argv) {
     MPI_Scatter(NULL, local->size, MPI_INT, local->arr, local->size, MPI_INT, 0, MPI_COMM_WORLD);
   }
 
+  double start = MPI_Wtime();
   distributed_sort(local, rank, size);
+  double end = MPI_Wtime();
   MPI_Barrier(MPI_COMM_WORLD);
 
   // gather sorted data at root
@@ -45,7 +47,7 @@ int main(int argc, char** argv) {
 
   // wait until all ranks reach this point
   MPI_Barrier(MPI_COMM_WORLD);
-  results(sorted, rank, size);
+  results(sorted, rank, size, end-start);
 
   delVec(local);
   MPI_Finalize();

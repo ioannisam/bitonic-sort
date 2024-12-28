@@ -1,2 +1,1 @@
-- do the testing
-- add documantation (report/README and algorithm visualization)
+- do the testing (serial/distributed/qsort)

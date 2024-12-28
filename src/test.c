@@ -26,12 +26,13 @@ int sortCheck(Vector* vec) {
   return 1;
 }
 
-void results(Vector* sorted, int rank, int size) {
+void results(Vector* sorted, int rank, int size, double time) {
 
   if (rank == 0) {
     // printVec(sorted, "Sorted data:\n");
     isSorted(sorted, size) ? printf("Partial Check: Array is Sorted :)\n") : printf("Partial Check: Array is NOT Sorted :(\n");
     sortCheck(sorted)      ? printf("Full Check:    Array is Sorted :)\n") : printf("Full Check:    Array is NOT Sorted :(\n");
+    printf("\nDistributed Sort was executed in: %f seconds.\n", time);
     delVec(sorted);
   }
 }
