@@ -424,11 +424,7 @@ void elbowmerge(Vector* local, int direction) {
 The merging process is also performed in $O(n)$ time, making the total computational cost of the local sort $O(n)$ too.
 
 \chapter{Results}
-As previously mentioned, a serial version of this algorithm has a times complexity of \(\boldsymbol{O(n \log^2(n))}\), which is not ideal, as there are faster algorithms, but a parallel or distributed version, significantly lessens this to \(\boldsymbol{O(\log^2(n))}\).
-
-We tested these algorithms with \textbf{33.554.432} (or $2^{25}$) random numbers in a sequence, ranging between the numbers \textbf{1 - 999}.  Note that the bitonic sorting algorithm can successfully sort only sequences in the \textbf{power of 2}. We verified correctness by using \textbf{qsort}.
-
-The algorithms where run inside the \textbf{Aristotle Cluster} provided by the \textbf{Aristotle University of Thessaloniki}, with \textbf{4 cores}, splitting the load among \textbf{4 processes} or \textbf{ranks.}
+As previously mentioned, a serial version of this algorithm has a times complexity of $\boldsymbol{O(n \log^2(n)}$, which is not ideal, as there are faster algorithms. However, a parallel or distributed version, significantly lessens this to $\boldsymbol{O(\log^2(n))}$.
 
 \begin{table}[h!]
     \centering
@@ -436,9 +432,8 @@ The algorithms where run inside the \textbf{Aristotle Cluster} provided by the \
         \hline
         \rule{0pt}{3ex}\textbf{Performance Table} & \textbf{Serial}                 & \textbf{Distributed}          & \textbf{Quick Sort}          \\ \hline
         \rule{0pt}{3ex}Time Complexity            & \(\boldsymbol{O(n \log^2(n))}\) & \(\boldsymbol{O(\log^2(n))}\) & \(\boldsymbol{O(n\log(n))}\) \\ \hline
-        \rule{0pt}{3ex}Time& \textbf{1}min \textbf{51}sec    & \textbf{6.02}sec              & \textbf{1}min \textbf{24}sec \\ \hline
     \end{tabular}
-    \caption{Performance Table.}
+    \caption{Performance Table}
     \label{tab:simple_table}
 \end{table}
 
@@ -471,7 +466,29 @@ The algorithms where run inside the \textbf{Aristotle Cluster} provided by the \
         \end{axis}
     \end{tikzpicture}
 \end{center}
-As we can see our distributed implementation of the \textbf{Bitonic Sort} algorithm is significantly faster than a serial implementation, as well as other serial sorting algorithms like \textbf{Quick Sort}.
+
+This program was executed on the \textbf{Aristotle Cluster} provided by the \textbf{Aristotle University of Thessaloniki}. We tested our program across a range of parameters: $p = [1:7]$ and $q = [20:27]$, where the random array (to be sorted) was populated with integers in the range \textbf{1–999}. We then verified the correctness of the results using \textbf{qsort}. \newpage
+
+In the graphic below, we observe the \textit{performance} of the algorithm for different values of $p$ and $q$. It is important to note that for $p=1$, the algorithm effectively becomes serial, with the sorting performed entirely using \textbf{qsort}. This is because the initial sorting step accounts the entire array.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{performance.png}
+    \caption{Performance}
+    \label{fig:enter-label}
+\end{figure}
+\vspace{0.5cm}
+
+While the above graphic provides an excellent visualization of performance, it lacks a crucial element: it cannot quantify the effectiveness of the distributed approach compared to the serial one, as the number of elements to be sorted depends on both $q$ and $p$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{speed.png}
+    \caption{Speed}
+    \label{fig:enter-label}
+\end{figure}
+
+This graphic highlights the number of elements sorted per second of execution. We observe that distributing the load across multiple CPUs achieves nearly a \textbf{sixfold} improvement in sorting speed compared to the serial implementation.
 
 \chapter{Tools and Sources}
 In this project, the following tools where used:
@@ -479,7 +496,7 @@ In this project, the following tools where used:
 \item The \textbf{C} programming language.
 \item The \textbf{OpenMPI} Library for implementing the distributed algorithm.
 \item The \textbf{Neovim} text editor for development.
-\item \textbf{Gimp} for asset creation.
+\item \textbf{Gimp} and \textbf{Python} with \textbf{matplotlib} for asset creation.
 \item \textbf{GitHub} for version control.
 \item \textbf{GitHub Copilot} as an AI assistant.
 \end{enumerate}

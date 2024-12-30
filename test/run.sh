@@ -1,16 +1,29 @@
 #!/bin/bash
-#SBATCH --partitoion=rome
-#SBATCH --ntasks-per-node=64
-#SBATCH --nodes=1
-#SBATCH --time=0:05:00
 
-cd /home/c/ioannisam/
+#SBATCH --partition=rome
+#SBATCH --ntasks-per-node=128
+#SBATCH --nodes=1
+#SBATCH --time=2:00:00
+
+cd /home/i/ioannisam/bitonic-sort
+
+module load gcc/9.2.0 openmpi/3.1.3
 
 make clean
 make
 
-touch test/p6_q21.txt
+rm test/results.txt
+touch test/results.txt
 
-srun -n 64 ./bin/distributed 21 6 > p6_q21.txt
+for p in {1..7};
+do
+  echo -e "NUMBER OF PROCESSES: $p\n\n" >> ./test/results.txt
+  for q in {20..27};
+  do
+    echo -e "q=$q\n" >> ./test/results.txt
+    srun -n $((2**p)) ./bin/distributed $q $p >> ./test/results.txt  
+
+  done
+done
 
 make clean
