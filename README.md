@@ -1,6 +1,3 @@
-## Appendix
-For more in-depth information about the project, please refer to the report.pdf document.
-
 # Bitonic Sort using MPI
 **Authors:** Ioannis Michalainas, Savvas Tzanetis
 
@@ -33,7 +30,8 @@ cd bitonic-sort
 make
 ```
 
-To run the executable you can either run the command `make run`, which executes the algorithm with **4** processes and a sequence of **16 random** numbers (4 numbers per process). In order to tweak the ammount of processes or total numbers to sort you should run the following command:
+To run the executable you can run the command `make run`, which executes the algorithm with **4** processes and a sequence of **16 random** numbers (4 numbers per process). 
+In order to tweak the ammount of processes or total numbers to sort you should run the following command:
 
 ```bash
 mpirun -np {np} ./bin/distributed {q} {p}
