@@ -6,6 +6,8 @@ typedef struct {
   int size;
 } Vector;
 
+void checkArgs(int argc, char** argv, int* q, int* p);
+
 Vector* newVec(int size);
 void delVec(Vector* vec);
 void printVec(Vector* vec);
