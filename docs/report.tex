@@ -1,6 +1,5 @@
 \documentclass[12pt]{report}
 
-% import packages
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{graphicx}
@@ -9,17 +8,22 @@
 \usepackage{geometry}
 \usepackage{subfig}
 \usepackage{float}
-\geometry{a4paper, margin=1in}
-
 \usepackage{pgfplots}
+
+\geometry{a4paper, margin=1in}
 \pgfplotsset{compat=1.18}
+
+\definecolor{codegray}{gray}{0.95}
+\definecolor{codegreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{codepurple}{rgb}{0.5, 0, 0.4}
 
 \lstdefinestyle{cstyle}{
     language=C,
+    backgroundcolor=\color{codegray},
     basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{purple}\bfseries,
+    keywordstyle=\color{codepurple}\bfseries,
     stringstyle=\color{orange},
-    commentstyle=\color{olive},
+    commentstyle=\color{codegreen},
     numbers=none,
     tabsize=4,
     showspaces=false,
@@ -54,14 +58,14 @@ To grasp the concept of distributed \textbf{Bitonic Sort}, it is essential to fi
 \textbf{Bitonic Sort} is a sorting algorithm that operates by sorting and merging bitonic sequences. A bitonic sequence is defined as a sequence of numbers that first monotonically increases and then monotonically decreases (or vise versa), or can be cyclically rotated to exhibit this pattern. Note that sorted sequences are also bitonic. For example, the sequence $6, 4, 3, 1, 2, 5, 8, 7$ is bitonic because it can be rotated to $7, 6, 4, 3, 1, 2, 5, 8$. 
 
 The algorithm is has the following characteristics:
-
 \begin{itemize}
     \item $log(n)$ steps, where n is the total amount of numbers, with $log(step)$ comparison phases in each step.
     \item In each comparison phase, we swap elements using the \textbf{min-max} criteria. The min-max pattern is presented in the image bellow:
 \end{itemize}
+
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{bitonic.png}
+    \includegraphics[width=0.9\linewidth]{bitonic.png}
     \caption{Bitonic Sort}
     \label{fig:enter-label}
 \end{figure}
@@ -69,50 +73,39 @@ The algorithm is has the following characteristics:
 
 To illustrate the process, consider the following random sequence:
 \[S\{ 3,7,4,8,6,2,1,5 \}\]
-In each step each element is compared to its neighbor with distance \textbf{stage}
+In each step each element is compared to its neighbor with distance \textbf{stage}.
+
 \begin{enumerate}
-\item \textbf{Step 1, Stage 1}
-
-\textbf{min-max pattern:} $min\:max\:max\:min\:min\:max\:max\:min$
-
-\[
-    S\{3,7,8,4,2,6,5,1\}
-\]
-
-\item \textbf{Step 2, Stage 2}
-
-\textbf{min-max pattern:} $min\:min\:max\:max\:max\:max\:min\:min$
-\[
-    S\{3,4,8,7,5,6,2,1\}
-\]
-
-\item \textbf{Step 2, Stage 1}
-
-\textbf{min-max pattern:} $min\:max\:min\:max\:max\:min\:max\:min$
-\[
-    S\{3,4,8,7,6,5,2,1\}
-\]
-
-\item \textbf{Step 3, Stage 3}
-
-\textbf{min-max pattern:} $min\:min\:min\:min\:max\:max\:max\:max$
-\[
-    S\{3,4,2,1,6,5,7,8\}
-\]
-
-\item \textbf{Step 3, Stage 2}
-
-\textbf{min-max pattern:} $min\:min\:max\:max\:min\:min\:max\:max$
-\[
-    S\{2,1,3,4,6,5,7,8\}
-\]
-
-\item \textbf{Step 3, Stage 1}
-
-\textbf{min-max pattern:} $min\:max\:min\:max\:min\:max\:min\:max$
-\[
-    S\{1, 2, 3, 4, 5, 6, 7, 8\}
-\]
+    \item \textbf{Step 1, Stage 1}
+    \textbf{min-max pattern:} $min\:max\:max\:min\:min\:max\:max\:min$
+    \[
+        S\{3,7,8,4,2,6,5,1\}
+    \] 
+    \item \textbf{Step 2, Stage 2}
+    \textbf{min-max pattern:} $min\:min\:max\:max\:max\:max\:min\:min$
+    \[
+        S\{3,4,8,7,5,6,2,1\}
+    \]
+    \item \textbf{Step 2, Stage 1}
+    \textbf{min-max pattern:} $min\:max\:min\:max\:max\:min\:max\:min$
+    \[
+        S\{3,4,8,7,6,5,2,1\}
+    \]
+    \item \textbf{Step 3, Stage 3}
+    \textbf{min-max pattern:} $min\:min\:min\:min\:max\:max\:max\:max$
+    \[
+        S\{3,4,2,1,6,5,7,8\}
+    \]
+    \item \textbf{Step 3, Stage 2}
+    \textbf{min-max pattern:} $min\:min\:max\:max\:min\:min\:max\:max$
+    \[
+        S\{2,1,3,4,6,5,7,8\}
+    \]
+    \item \textbf{Step 3, Stage 1}
+    \textbf{min-max pattern:} $min\:max\:min\:max\:min\:max\:min\:max$
+    \[
+        S\{1, 2, 3, 4, 5, 6, 7, 8\}
+    \]
 \end{enumerate}
 
 \section{Remarks}
@@ -122,7 +115,7 @@ In each step each element is compared to its neighbor with distance \textbf{stag
 \end{enumerate}
         
 \chapter{Distributed Bitonic}
-As mentioned above, this algorithm, when implemented in a serial manner, has a time complexity of \(\boldsymbol{O(n\log^2(n))}\), which is higher than most sorting algorithms. Despite that, this algorithm is useful, as it is well-suited for parallel implementations, like the one we will be discussing. For a parallel implementation, we can achieve a time complexity of \(\boldsymbol{O(\log^2(n))}\), which is significantly faster than our serial implementation. We will be achieving this goal, by utilizing the \textbf{Message Passing Interface (MPI)} for inter-process communication, allowing us to distribute the load across multiple machines.
+As mentioned above, this algorithm, when implemented in a serial manner, has a time complexity of \(\boldsymbol{O(n\log^2(n))}\), which is higher than most sorting algorithms. Despite that, this algorithm is useful, as it is well-suited for parallel implementations, like the one we will be discussing. For a parallel implementation, we can achieve a time complexity of \(\boldsymbol{O(\log^2(n))}\), which is significantly faster than our serial implementation. We will be achieving this goal by utilizing the \textbf{Message Passing Interface (MPI)} for inter-process communication, allowing us to distribute the load across multiple machines.
 
 \section{Generating Random Sequences}
 The sequences we used to test our results were generated using the \textbf{rand()} function, which is part of the \textbf{C standard library}. More specifically, we selected \textit{integers} ranging from \textbf{1} to \textbf{999} for simplicity.  We use this function to create a random array of $N$ integers, which we then distribute across multiple processes.
@@ -187,7 +180,7 @@ After each rank performs an initial sort to its local data, we enter a nested fo
 $$
 log_2(size)
 $$
-In each step, we calculate the \textbf{distance} of the \textbf{partner} we need to exchange data and said partner's rank, then we proceed to \textbf{exchange} data by following a \textbf{min} or \textbf{max} pattern. After each stage has concluded each rank sorts its local data using \textbf{elbowmerge}.
+In each step, we calculate the \textbf{distance} of the \textbf{partner} we need to exchange data and said partner's rank, then we proceed to \textbf{exchange} data by following a \textbf{min} or \textbf{max} pattern. After each stage has concluded, each rank sorts its local data using \textbf{elbowmerge}.
 
 \begin{lstlisting}[style=cstyle]
 initialSort(local, rank); 
@@ -205,7 +198,7 @@ for (int stage=1; stage<=p; stage++) {
   }
 \end{lstlisting}
 
-Later follows a visual outline of the algorithm, illustrated featuring an example of \textbf{8} processes.
+Later follows a visual outline of the algorithm, featuring an example of \textbf{8} processes.
 
 \begin{figure}
     \centering
@@ -217,6 +210,7 @@ Later follows a visual outline of the algorithm, illustrated featuring an exampl
 \subsection{Initial Sort}
 
 First and foremost, after the random array data has been distributed evenly across all ranks, each rank will go through an \textit{initial sorting process} that will run exactly once. This sort is performed using the \textbf{qsort} function provided by the C standard library.
+
 \begin{lstlisting}[style=cstyle]
 void initialSort(Vector* local, int rank) {
   if (rank & 1) {
@@ -226,21 +220,22 @@ void initialSort(Vector* local, int rank) {
   }
 }
 \end{lstlisting}
+
 Here \textbf{(rank \& 1)} is a logical operation equivalent to \textbf{rank} MOD \textbf{2}  that essentially allows us to sort the sub-arrays with alternating order. 
 Note that the logical AND (\&) operation will be handy later on for creating alternating binary patterns, since the \textbf{Bitonic Sort} algorithm is based on \textbf{powers of 2}.
 
 \vspace{1cm}
 \begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Decimal} & \textbf{Binary} & \textbf{AND with 1} & \textbf{AND with 2} & \textbf{AND with 4} \\ \hline
-0 & 000 & 000 \textit{(OFF)}& 000 \textit{(OFF)}& 000 \textit{(OFF)}\\ \hline
-1 & 001 & 001 \textit{(ON)}& 000 \textit{(OFF)}& 000 \textit{(OFF)}\\ \hline
-2 & 010 & 000 \textit{(OFF)}& 010 \textit{(ON)}& 000 \textit{(OFF)}\\ \hline
-3 & 011 & 001 \textit{(ON)}& 010 \textit{(ON)}& 000 \textit{(OFF)}\\ \hline
-4 & 100 & 000 \textit{(OFF)}& 000 \textit{(OFF)}& 100 \textit{(ON)}\\ \hline
-5 & 101 & 001 \textit{(ON)}& 000 \textit{(OFF)}& 100 \textit{(ON)}\\ \hline
-6 & 110 & 000 \textit{(OFF)}& 010 \textit{(ON)}& 100 \textit{(ON)}\\ \hline
-7 & 111 & 001 \textit{(ON)}& 010 \textit{(ON)}& 100 \textit{(ON)}\\ \hline
+    \hline
+    \textbf{Decimal} & \textbf{Binary} & \textbf{AND with 1} & \textbf{AND with 2} & \textbf{AND with 4} \\ \hline
+    0 & 000 & 000 \textit{(OFF)}& 000 \textit{(OFF)}& 000 \textit{(OFF)}\\ \hline
+    1 & 001 & 001 \textit{(ON)}& 000 \textit{(OFF)}& 000 \textit{(OFF)}\\ \hline
+    2 & 010 & 000 \textit{(OFF)}& 010 \textit{(ON)}& 000 \textit{(OFF)}\\ \hline
+    3 & 011 & 001 \textit{(ON)}& 010 \textit{(ON)}& 000 \textit{(OFF)}\\ \hline
+    4 & 100 & 000 \textit{(OFF)}& 000 \textit{(OFF)}& 100 \textit{(ON)}\\ \hline
+    5 & 101 & 001 \textit{(ON)}& 000 \textit{(OFF)}& 100 \textit{(ON)}\\ \hline
+    6 & 110 & 000 \textit{(OFF)}& 010 \textit{(ON)}& 100 \textit{(ON)}\\ \hline
+    7 & 111 & 001 \textit{(ON)}& 010 \textit{(ON)}& 100 \textit{(ON)}\\ \hline
 \end{tabular}
 \vspace{1cm}
 
@@ -251,26 +246,28 @@ Above, we can visualize and understand the patterns created using the logical AN
 In this part, each process \textbf{exchanges} data with its \textbf{partner}. We need to determine the \textbf{distance} of the partner the process should exchange data with. This is given by $2^{(step-1)}$.  We then calculate the partner based on the distance \textbf{rank} XOR \textbf{step}.
 
 The processes are arranged in a hypercube-like structure, where the rank of each process is treated as a binary number. The \textbf{XOR} operation between two binary numbers results in a number where the bits are set to 1 at positions where the two numbers differ. The distance between two nodes in a hypercube is the number of differing bits between their binary representations, known as the \textbf{Hamming distance}. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{cube.png}
-    \caption{Hyper-Cube Representation}
+    \caption{3D Hyper-Cube Representation}
     \label{fig:enter-label}
 \end{figure}
+
 The XOR operation helps find a partner that differs from the current process by exactly the number of bits defined by the \textit{distance} at each step. This ensures that in each stage of the algorithm, the process communicates with a partner that is located at a specific Hamming distance, consistent with the hypercube structure. At each stage, the \textit{distance} doubles (based on the step), and the \verb|rank ^ distance| operation calculates a process ID that is at the desired Hamming distance.
 
 \vspace{1cm}
 \begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Decimal} & \textbf{Binary} & \textbf{XOR with 1} & \textbf{XOR with 2} & \textbf{XOR with 4} \\ \hline
-0 & 000 & 001 & 010 & 100 \\ \hline
-1 & 001 & 000 & 011 & 101 \\ \hline
-2 & 010 & 011 & 000 & 110 \\ \hline
-3 & 011 & 010 & 001 & 111 \\ \hline
-4 & 100 & 101 & 110 & 000 \\ \hline
-5 & 101 & 100 & 111 & 001 \\ \hline
-6 & 110 & 111 & 100 & 010 \\ \hline
-7 & 111 & 110 & 101 & 011 \\ \hline
+    \hline
+    \textbf{Decimal} & \textbf{Binary} & \textbf{XOR with 1} & \textbf{XOR with 2} & \textbf{XOR with 4} \\ \hline
+    0 & 000 & 001 & 010 & 100 \\ \hline
+    1 & 001 & 000 & 011 & 101 \\ \hline
+    2 & 010 & 011 & 000 & 110 \\ \hline
+    3 & 011 & 010 & 001 & 111 \\ \hline
+    4 & 100 & 101 & 110 & 000 \\ \hline
+    5 & 101 & 100 & 111 & 001 \\ \hline
+    6 & 110 & 111 & 100 & 010 \\ \hline
+    7 & 111 & 110 & 101 & 011 \\ \hline
 \end{tabular}
 \vspace{1cm}
         
@@ -278,7 +275,8 @@ Every rank then sends their \textbf{local} array to their respective partner and
 
 \begin{lstlisting}[style=cstyle]
 void exchange(int partner, Vector* local, Vector* remote) {
-
+  
+  // send local and receive remote
   MPI_Sendrecv(local->arr, local->size, MPI_INT, partner, 0,
                remote->arr, local->size, MPI_INT, partner, 0,
                MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -291,17 +289,18 @@ This part of the algorithm involves processing the data each rank receives from 
 
 A helpful way to visualize the criteria for choosing min or max is to imagine that for each stage \textit{mirrors} are placed before the processes with ranks $2^{stage} + k*w$ where $w=2*mirror$ and k any natural number $N[0,1,2,...]$, spanning the whole array of processes. We then determine in which mirrors province does the rank we examine belong and calculate its distance from the mirror, its \textit{reflection}.
 
-Let's examine the example of 8 processes to clarify our approach. Suppose we are on the \textbf{first stage} with \textbf{distance one}. We place \textit{mirrors} at positions \textbf{2} and \textbf{6}, like so: $[p0\:p1|p2\:p3,p4\:p5|p6\:p7]$. In this case, $p0,p3,p4,p7$ would have a \textit{reflection} (distance from the mirror) of 1 and $p1,p2,p5,p6$ a \textit{reflection} of 0. The required min max order is: $[min\:max | max\:min, min\:max | max\:min]$.  We notice that there is symmetry around the locations of the mirrors, spanning $w=2*mirror$ range. Employing a similar binary pattern creation tactic we used for the initial sort, we determine whether a process should keep the min or the max elements element wise. We concluded to the following formula:
+Let's examine the example of 8 processes to clarify our approach. Suppose we are on the \textbf{first stage} with \textbf{distance one}. We place \textit{mirrors} at positions \textbf{2} and \textbf{6}, like so: $[p0\:p1|p2\:p3,p4\:p5|p6\:p7]$. In this case, $p0,p3,p4,p7$ would have a \textit{reflection} of 1 and $p1,p2,p5,p6$ a \textit{reflection} of 0. The required min max order is: $[min\:max | max\:min, min\:max | max\:min]$.  We notice that there is symmetry around the locations of the mirrors, spanning $w=2*mirror$ range. Employing a similar binary pattern creation tactic we used for the initial sort, we determine whether a process should keep the min or the max elements element wise. We concluded to the following formula:
 $$
 reflection\:\&\: 2^{(log_2(distance))}
 $$
 If the above operation results to 0, we get a \textbf{max} element-wise comparison, else we get a \textbf{min} element-wise comparison.
 
-This approach generalizes for any number of processes that is a \textbf{power of 2}.
-\newpage
+This approach generalizes for any number of processes that is a \textbf{power of 2}. \newpage
+
 \begin{lstlisting}[style=cstyle]
 void minmax(int rank, int stage, int distance, 
             Vector* local, Vector* remote) {
+
   int mirror = 1 << stage;
   int w = 2*mirror;
   int pos = rank % w;
@@ -316,20 +315,18 @@ void minmax(int rank, int stage, int distance,
 }
 \end{lstlisting}
 
-        \subsection{Elbow Merge}
-        
-        Lastly,  \textbf{elbowmerge} is a sorting technique specific to bitonic sequences (that being the reason why we do not use it for our initial sort, as the arrays are arbitrary). 
-        
-        We first begin by identifying the \textbf{extremum} of the bitonic array, either the \textbf{maximum} (elbow) or the \textbf{minimum} (pit). To do that, we need to locate a point in the sequence that its adjacent points (in the context of a circular buffer) are either both smaller than said point (elbow) or larger (pit). 
-        
-        If we do not manage to find such point, it means that the sequence is of the form $[a, a, b, b]$ or $[b, b, a, a]$ or $[a, a, a, a]$ where $a>b$. Such sequences are not considered bitonic, but consist a possible input for the elbow function. To handle them gracefully, we select the max element by convention and return it as the elbow. 
-        
-        That way, locating the extremum of a bitonic sequence is performed in $O(n)$ time, even for the corner cases.
-        \newpage
+\subsection{Elbow Merge}
 
-        \begin{lstlisting}[style=cstyle] 
-        
-        Extremum elbow(Vector* local) {
+Lastly,  \textbf{elbowmerge} is a sorting technique specific to bitonic sequences (that being the reason why we do not use it for our initial sort, as the arrays are arbitrary). 
+
+We first begin by identifying the \textbf{extremum} of the bitonic array, either the \textbf{maximum} (elbow) or the \textbf{minimum} (pit). To do that, we need to locate a point in the sequence that its adjacent points (in the context of a circular buffer) are either both smaller than said point (elbow) or larger (pit). 
+
+If we do not manage to find such point, it means that the sequence is of the form $[a, a, b, b]$ or $[b, b, a, a]$ or $[a, a, a, a]$ where $a>b$. Such sequences may not be considered bitonic, but consist possible inputs for the elbow function. To handle them gracefully, we select the max element and return it as the elbow (by convention). 
+
+That way, locating the extremum of a bitonic sequence is performed in $O(n)$ time, even for the corner cases. \newpage
+
+\begin{lstlisting}[style=cstyle] 
+Extremum elbow(Vector* local) {
 
   Extremum point;
   point.index = -1;
@@ -369,10 +366,10 @@ void minmax(int rank, int stage, int distance,
 
   return point;
 }
-            
 \end{lstlisting}
-After identifying the \textbf{extremum}, we add it either on the end or the start of a temporary array, depending on if we have a \textbf{minimum} or a \textbf{maximum}. For the \textbf{elbow} case, we then compare the values of the \textbf{left} and \textbf{right} indices and the one containing the largest element gets to be placed next in the temporary array and shift its index by one (-1 for left +1 for right) in a circular buffer manner. This processes is repeated until all elements are placed in the tmp array, resulting in a fully sorted array, and follows commensurable logic in the \textbf{pit} case. If we want to sort the array in \textbf{ascending} order we \textit{directly} copy tmp to local, if we want \textbf{descending} order we \textit{reverse} copy our results. 
-\newpage
+
+After identifying the \textbf{extremum}, we add it either on the end or the start of a temporary array, depending on if we have a \textbf{minimum} or a \textbf{maximum}. For the \textbf{elbow} case, we then compare the values of the \textbf{left} and \textbf{right} indices and the one containing the largest element gets to be placed next in the temporary array and shift its index by one (-1 for left +1 for right) in a circular buffer manner. This processes is repeated until all elements are placed in the tmp array, resulting in a fully sorted array, and follows commensurable logic in the \textbf{pit} case. If we want to sort the array in \textbf{ascending} order we \textit{directly} copy tmp to local, if we want \textbf{descending} order we \textit{reverse} copy our results. \newpage
+
 \begin{lstlisting}[style=cstyle]
 void elbowmerge(Vector* local, int direction) {
   Extremum point = elbow(local);
@@ -418,13 +415,12 @@ void elbowmerge(Vector* local, int direction) {
   }
   free(tmp);
 }
-
-
 \end{lstlisting}
+
 The merging process is also performed in $O(n)$ time, making the total computational cost of the local sort $O(n)$ too.
 
 \chapter{Results}
-As previously mentioned, a serial version of this algorithm has a times complexity of $\boldsymbol{O(n \log^2(n)}$, which is not ideal, as there are faster algorithms. However, a parallel or distributed version, significantly lessens this to $\boldsymbol{O(\log^2(n))}$.
+As previously mentioned, a serial version of this algorithm has a time complexity of $\boldsymbol{O(n \log^2(n)}$, which is not ideal, as there are faster algorithms. However, a parallel or distributed version, significantly lessens this to $\boldsymbol{O(\log^2(n))}$.
 
 \begin{table}[h!]
     \centering
@@ -441,7 +437,7 @@ As previously mentioned, a serial version of this algorithm has a times complexi
     \begin{tikzpicture}
         \begin{axis}[
             width=14cm,
-            height=7cm,
+            height=9cm,
             xlabel={$x$},
             ylabel={$y$},
             xmin=1, xmax=100,
@@ -452,11 +448,11 @@ As previously mentioned, a serial version of this algorithm has a times complexi
             axis y line=left,
             title={Time Complexity Graphs}
         ]
-            % plot x * log2(x)
+            % plot x*log2(x)
             \addplot[blue, thick] expression[domain=1:100, samples=100]{x * ln(x)/ln(2)};
             \addlegendentry{$x \log(x)$}
 
-            % plot x * (log2(x))^2
+            % plot x*(log2(x))^2
             \addplot[red, thick] expression[domain=1:100, samples=100]{x * (ln(x)/ln(2))^2};
             \addlegendentry{$x \log^2(x)$}
 
@@ -469,21 +465,20 @@ As previously mentioned, a serial version of this algorithm has a times complexi
 
 This program was executed on the \textbf{Aristotle Cluster} provided by the \textbf{Aristotle University of Thessaloniki}. We tested our program across a range of parameters: $p = [1:7]$ and $q = [20:27]$, where the random array (to be sorted) was populated with integers in the range \textbf{1–999}. We then verified the correctness of the results using \textbf{qsort}. \newpage
 
-In the graphic below, we observe the \textit{performance} of the algorithm for different values of $p$ and $q$. It is important to note that for $p=1$, the algorithm effectively becomes serial, with the sorting performed entirely using \textbf{qsort}. This is because the initial sorting step accounts the entire array.
+In the graphic below, we observe the \textit{performance} of the algorithm for different values of $p$ and $q$. It is important to note that for $p=1$, the algorithm effectively becomes serial, with the sorting performed entirely using \textbf{qsort}. This is because the initial sorting step accounts for the entire array.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{performance.png}
+    \includegraphics[width=0.85\linewidth]{performance.png}
     \caption{Performance}
     \label{fig:enter-label}
 \end{figure}
-\vspace{0.5cm}
 
 While the above graphic provides an excellent visualization of performance, it lacks a crucial element: it cannot quantify the effectiveness of the distributed approach compared to the serial one, as the number of elements to be sorted depends on both $q$ and $p$.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{speed.png}
+    \includegraphics[width=0.85\linewidth]{speed.png}
     \caption{Speed}
     \label{fig:enter-label}
 \end{figure}
@@ -491,22 +486,26 @@ While the above graphic provides an excellent visualization of performance, it l
 This graphic highlights the number of elements sorted per second of execution. We observe that distributing the load across multiple CPUs achieves nearly a \textbf{sixfold} improvement in sorting speed compared to the serial implementation.
 
 \chapter{Tools and Sources}
+
 In this project, the following tools where used:
 \begin{enumerate}
-\item The \textbf{C} programming language.
-\item The \textbf{OpenMPI} Library for implementing the distributed algorithm.
-\item The \textbf{Neovim} text editor for development.
-\item \textbf{Gimp} and \textbf{Python} with \textbf{matplotlib} for asset creation.
-\item \textbf{GitHub} for version control.
-\item \textbf{GitHub Copilot} as an AI assistant.
+    \item The \textbf{C} programming language.
+    \item The \textbf{OpenMPI} Library for implementing the distributed algorithm.
+    \item The \textbf{Aristotle Cluster} for testing.
+    \item \textbf{Neovim} text editor for development.
+    \item \textbf{GitHub} for version control.
+    \item \textbf{GitHub Copilot} as an AI assistant.
+    \item \textbf{Python} with \textbf{matplotlib} for graphics
+    \item \textbf{Gimp} for asset creation.
 \end{enumerate}
-While the following sources were helpful in understanding of the problem presented in the assignment.
+
+The following sources were helpful for understanding the problem presented in the assignment:
 \begin{itemize}
-\item \url{https://en.wikipedia.org/wiki/Bitonic_sorter}
-\item \url{https://www.geeksforgeeks.org/bitonic-sort/}
-\item \url{https://www.open-mpi.org/doc/v4.0/}
-\item Lecture notes from the \textbf{Parallel and Distributed Systems} course, written by professor \textbf{Nikolaos Pitsianis}.
-\item Credits to \textit{Epameinondas Bakoulas} for keeping lecture notes and creating the distributed-algorithm.png asset.
+    \item \url{https://en.wikipedia.org/wiki/Bitonic_sorter}
+    \item \url{https://www.geeksforgeeks.org/bitonic-sort/}
+    \item \url{https://www.open-mpi.org/doc/v4.0/}
+    \item Lecture notes from the \textbf{Parallel and Distributed Systems} course, written by professor \textbf{Nikolaos Pitsianis}.
+    \item Credits to \textit{Epameinondas Bakoulas} for keeping lecture notes and creating the distributed-algorithm.png asset.
 \end{itemize}
 
 \end{document}

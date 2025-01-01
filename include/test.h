@@ -3,7 +3,8 @@
 
 #include "./utility.h"
 
-int  isSorted(Vector* sorted, int processes);
-void results (Vector* sorted, int processes, int rank, double time);
+int  sortcheck(Vector* vec, int processes);
+int  fullCheck(Vector* vec);
+void results  (Vector* sorted, int processes, int rank, double time);
 
 #endif // TEST_H

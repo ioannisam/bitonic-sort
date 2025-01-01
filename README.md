@@ -47,13 +47,15 @@ mpirun -np 4 ./bin/distributed 2 2
 ```
 
 ## Performance
-This distributed implementation (as well as any other algorithm for comparison) where run inside the **Aristotle Cluster** provided by the **Aristotle University of Thessaloniki**, with **4 cores**, splitting the load among **4 processes** or **ranks**.
+This program was executed on the **Aristotle Cluster** provided by the **Aristotle University of Thessaloniki**. 
+We tested our program across a range of parameters: **p = [1:7]** and **q = [20:27]**, where the random array (to be sorted) was populated with integers in the range **1–999**. 
+We then verified the correctness of the results using **qsort**.
 
- As a test, we sorted **33.554.432** ( or 2<sup>25</sup> ) random integers ranging between the numbers **1 - 999**. Note that the bitonic sorting algorithm can successfully sort only sequences in the **power of 2**.
 | **Performance Table** | **Serial**            | **Distributed**      | **Quick Sort**     |
 |-----------------------|-----------------------|----------------------|--------------------|
 | **Time Complexity**   | O(nlog<sup>2</sup>(n))| O(log<sup>2</sup>(n))|  O(nlog(n))        |
-| **Time**              | **1**min **51**sec    | **6**sec             | **1**min **24**sec |
+
+![Algorithm Performance](./assets/performance.png)
 
 ## Appendix
 For more in-depth information about the project, please refer to the `report.pdf` document.

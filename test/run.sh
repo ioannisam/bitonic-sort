@@ -17,12 +17,11 @@ touch test/results.txt
 
 for p in {1..7};
 do
-  echo -e "NUMBER OF PROCESSES: $p\n\n" >> ./test/results.txt
+  echo -e "WHEN p = $p\n\n" >> ./test/results.txt
   for q in {20..27};
   do
-    echo -e "q=$q\n" >> ./test/results.txt
+    echo -e "q = $q\n" >> ./test/results.txt
     srun -n $((2**p)) ./bin/distributed $q $p >> ./test/results.txt  
-
   done
 done
 

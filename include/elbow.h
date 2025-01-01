@@ -3,7 +3,7 @@
 
 #include "./utility.h"
 
-typedef struct  {
+typedef struct {
   int index;
   int polarity; 
 } Extremum;

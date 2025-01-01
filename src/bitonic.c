@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <mpi.h>
-// #include <stdio.h>
 
 void initialSort(Vector* local, int rank) {
   
@@ -19,6 +18,7 @@ void initialSort(Vector* local, int rank) {
 
 void exchange(int partner, Vector* local, Vector* remote) {
 
+  // send local and receive remote
   MPI_Sendrecv(local->arr, local->size, MPI_INT, partner, 0,
                remote->arr, local->size, MPI_INT, partner, 0,
                MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -37,7 +37,6 @@ void distributed_sort(Vector* local, int rank, int size) {
 
       int distance = 1 << (step-1);
       int partner = rank ^ distance;
-      // printf("RANK %d: Stage %d, Distance %d. Partner: %d\n", rank, stage, distance, partner);
 
       exchange(partner, local, remote);
       minmax(rank, stage, distance, local, remote);
