@@ -1,0 +1,181 @@
+WHEN p = 1
+
+q = 20
+Execution Time (s): 1.37
+
+q = 21
+Execution Time (s): 2.96
+
+q = 22
+Execution Time (s): 6.20
+
+q = 23
+Execution Time (s): 13.18
+
+q = 24
+Execution Time (s): 27.87
+
+q = 25
+Execution Time (s): 58.58
+
+q = 26
+Execution Time (s): 123.67
+
+q = 27
+Execution Time (s): 260.26
+
+WHEN p = 2
+
+q = 20
+Execution Time (s): 2.93
+
+q = 21
+Execution Time (s): 6.21
+
+q = 22
+Execution Time (s): 13.25
+
+q = 23
+Execution Time (s): 27.67
+
+q = 24
+Execution Time (s): 58.87
+
+q = 25
+Execution Time (s): 123.63
+
+q = 26
+Execution Time (s): 261.12
+
+q = 27
+Execution Time (s): 555.55
+
+WHEN p = 3
+
+q = 20
+Execution Time (s): 6.16
+
+q = 21
+Execution Time (s): 13.27
+
+q = 22
+Execution Time (s): 27.44
+
+q = 23
+Execution Time (s): 58.42
+
+q = 24
+Execution Time (s): 124.10
+
+q = 25
+Execution Time (s): 260.73
+
+q = 26
+Execution Time (s): 548.13
+
+q = 27
+Execution Time (s): 1165.13
+
+WHEN p = 4
+
+q = 20
+Execution Time (s): 13.13
+
+q = 21
+Execution Time (s): 27.67
+
+q = 22
+Execution Time (s): 58.52
+
+q = 23
+Execution Time (s): 122.87
+
+q = 24
+Execution Time (s): 260.12
+
+q = 25
+Execution Time (s): 549.07
+
+q = 26
+Execution Time (s): 1152.71
+
+q = 27
+Execution Time (s): NaN
+
+WHEN p = 5
+
+q = 20
+Execution Time (s): 27.66
+
+q = 21
+Execution Time (s): 58.66
+
+q = 22
+Execution Time (s): 124.38
+
+q = 23
+Execution Time (s): 260.17
+
+q = 24
+Execution Time (s): 554.77
+
+q = 25
+Execution Time (s): 1164.10
+
+q = 26
+Execution Time (s): NaN
+
+q = 27
+Execution Time (s): NaN
+
+WHEN p = 6
+
+q = 20
+Execution Time (s): 58.88
+
+q = 21
+Execution Time (s): 122.97
+
+q = 22
+Execution Time (s): 260.33
+
+q = 23
+Execution Time (s): 546.17
+
+q = 24
+Execution Time (s): 1152.13
+
+q = 25
+Execution Time (s): NaN
+
+q = 26
+Execution Time (s): NaN
+
+q = 27
+Execution Time (s): NaN
+
+WHEN p = 7
+
+q = 20
+Execution Time (s): 124.25
+
+q = 21
+Execution Time (s): 260.95
+
+q = 22
+Execution Time (s): 548.65
+
+q = 23
+Execution Time (s): 1155.59
+
+q = 24
+Execution Time (s): NaN
+
+q = 25
+Execution Time (s): NaN
+
+q = 26
+Execution Time (s): NaN
+
+q = 27
+Execution Time (s): NaN

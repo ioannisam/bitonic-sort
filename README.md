@@ -1,4 +1,5 @@
 # Bitonic Sort using MPI
+
 **Authors:** Ioannis Michalainas, Savvas Tzanetis
 
 **Date:** December 2024
@@ -39,6 +40,19 @@ For example, in order to run **4 processes** with **4 integers** per process you
 ```bash
 ./bin/serial 2 2
 ```
+
+## Results
+
+This program was executed on the **Aristotle Cluster** provided by the **Aristotle University of Thessaloniki**. 
+We tested our program across a range of parameters: **p = [1:7]** and **q = [20:27]**, where the random array (to be sorted) was populated with *integers* in the range **1–999**. 
+We then verified the correctness of the results using qsort.
+
+The following graphics present the results for the *serial implementation*. 
+These results are limited by the available RAM of a single computer, which may result in memory exhaustion for certain input sizes (e.g., inputs exceeding 2<sup>31</sup> *integers*, approximately **8GB** of memory in this case).
+
+![performance](assets/performance.png)
+
+![speed](assets/speed.png)
 
 ## Appendix
 For the *distributed* implementation, please refer to the `main` branch.
