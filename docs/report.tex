@@ -39,6 +39,7 @@
 
 \title{\textbf{Bitonic Sort with MPI}}
 \author{Ioannis Michalainas, Savvas Tzanetis}
+\date{December 2024/ January 2025}
 \maketitle
 
 \tableofcontents
@@ -465,7 +466,7 @@ As previously mentioned, a serial version of this algorithm has a time complexit
 
 This program was executed on the \textbf{Aristotle Cluster} provided by the \textbf{Aristotle University of Thessaloniki}. We tested our program across a range of parameters: $p = [1:7]$ and $q = [20:27]$, where the random array (to be sorted) was populated with integers in the range \textbf{1–999}. We then verified the correctness of the results using \textbf{qsort}. \newpage
 
-In the graphic below, we observe the \textit{performance} of the algorithm for different values of $p$ and $q$. It is important to note that for $p=1$, the algorithm effectively becomes serial, with the sorting performed entirely using \textbf{qsort}. This is because the initial sorting step accounts for the entire array.
+In the graphic below, we observe the \textit{performance} of the algorithm for different values of $p$ and $q$. It is important to note that for $p=0$, the algorithm effectively becomes serial, with the sorting performed entirely using \textbf{qsort}. This is because the initial sorting step accounts for the entire array.
 
 \begin{figure}[H]
     \centering
@@ -483,7 +484,7 @@ While the above graphic provides an excellent visualization of performance, it l
     \label{fig:enter-label}
 \end{figure}
 
-This graphic highlights the number of elements sorted per second of execution. We observe that distributing the load across multiple CPUs achieves nearly a \textbf{sixfold} improvement in sorting speed compared to the serial implementation.
+This graphic highlights the number of elements sorted per second of execution. We observe that distributing the load across multiple CPUs achieves nearly a \textbf{twelvefold} improvement in sorting speed compared to the serial implementation.
 
 \chapter{Tools and Sources}
 

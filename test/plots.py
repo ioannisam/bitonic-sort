@@ -27,7 +27,7 @@ with open(FILE_PATH, 'r') as file:
             data[curr_p]['t'].append(curr_t)
             data[curr_p]['nps'].append(curr_nps)
 
-rainbow = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+rainbow = ['black', 'red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
 
 # performance plot
 plt.figure(figsize=(10, 6))

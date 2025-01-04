@@ -1,7 +1,7 @@
 # Bitonic Sort using MPI
 **Authors:** Ioannis Michalainas, Savvas Tzanetis
 
-**Date:** December 2024
+**Date:** December 2024/ January 2025
 
 This project implements *distributed sorting* using the **Bitonic Sort** algorithm and the **Message Passing Interface (MPI)**. 
 The primary objective is to sort a dataset of **N = 2<sup>q+p</sup>** numbers -where **2<sup>p</sup>** represents the total *processes* and **2<sup>q</sup>** the *numbers* assigned per process- utilizing inter-process communication. 
@@ -46,7 +46,7 @@ mpirun -np 4 ./bin/distributed 2 2
 
 ## Performance
 This program was executed on the **Aristotle Cluster** provided by the **Aristotle University of Thessaloniki**. 
-We tested our program across a range of parameters: **p = [1:7]** and **q = [20:27]**, where the random array (to be sorted) was populated with integers in the range **1–999**. 
+We tested our program across a range of parameters: **p = [1:7]** and **q = [20:27]**, where the random array (to be sorted) was populated with *integers* in the range **1–999**. 
 We then verified the correctness of the results using **qsort**.
 
 | **Performance Table** | **Serial**            | **Distributed**      | **Quick Sort**     |

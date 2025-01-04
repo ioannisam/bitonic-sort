@@ -1,3 +1,29 @@
+WHEN p = 0
+
+q = 20
+Execution Time (s): 0.17
+
+q = 21
+Execution Time (s): 0.35
+
+q = 22
+Execution Time (s): 0.74
+
+q = 23
+Execution Time (s): 1.48
+
+q = 24
+Execution Time (s): 2.42
+
+q = 25
+Execution Time (s): 4.02
+
+q = 26
+Execution Time (s): 7.76
+
+q = 27
+Execution Time (s): 14.39
+
 WHEN p = 1
 
 q = 20

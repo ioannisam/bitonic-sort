@@ -31,7 +31,7 @@ void results(Vector* sorted, int rank, int size, double time) {
     // printVec(sorted, "Sorted data:\n");
     sortCheck(sorted, size) ? printf("Partial Check: Array is Sorted :)\n") : printf("Partial Check: Array is NOT Sorted :(\n");
     fullCheck(sorted)       ? printf("Full    Check: Array is Sorted :)\n") : printf("Full    Check: Array is NOT Sorted :(\n");
-    printf("\nExecution Time (s): %f\n", time);
+    printf("\nExecution Time (s): %.2f\n", time);
     delVec(sorted);
   }
 }
