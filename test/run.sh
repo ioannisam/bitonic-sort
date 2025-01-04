@@ -15,7 +15,7 @@ make
 rm test/results.txt
 touch test/results.txt
 
-for p in {1..7};
+for p in {0..7};
 do
   echo -e "WHEN p = $p\n\n" >> ./test/results.txt
   for q in {20..27};

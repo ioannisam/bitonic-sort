@@ -13,7 +13,7 @@ void checkArgs(int argc, char** argv, int* q, int* p) {
 
   *q = atoi(argv[1]);
   *p = atoi(argv[2]);
-  if (*q <= 0 || *p <= 0) {
+  if (*q < 0 || *p < 0) {
     fprintf(stderr, "Error: q and p must be positive!\n");
     exit(EXIT_FAILURE);
   }
