@@ -19,7 +19,7 @@ By running `mpirun --version` you can verify the installation. After installing 
 
 1. Clone this repository
 ```bash
-git clone https://github.com/ioannisam/k-nn.git
+git clone https://github.com/ioannisam/bitonic-sort.git
 ```
 2. Navigate to the correct directory
 ```bash
@@ -57,3 +57,4 @@ We then verified the correctness of the results using **qsort**.
 
 ## Appendix
 For more in-depth information about the project, please refer to the `report.pdf` document.
+For CUDA implementation see [here](https://github.com/mariaxarisi/CUDA-sort).
